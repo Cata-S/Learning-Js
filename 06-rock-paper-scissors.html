@@ -7,46 +7,70 @@
 </head>
 <body>
   <p>Rock Paper Scissors</p>
-  
+    
   <p id="playerScore">Player Score: 0</p>
   <p id="computerScore">Computer Score: 0</p>
+  <p id="tie">Tie: 0</p>
 
-    <script>
-      let playerScore = 0;
-      let computerScore = 0;
-
-      function playGame(move) {
-          const moves = ['rock', 'paper', 'scissors'];
-          const computerMove = moves[Math.floor(Math.random() * moves.length)];
-
-          let result = '';
-
-          if (move === computerMove) {
-            result = 'Tie.';
-          } else if (
-            (move === 'rock' && computerMove === 'scissors') ||
-            (move === 'paper' && computerMove === 'rock') ||
-            (move === 'scissors' && computerMove === 'paper')
-          ) {
-            result = 'You win!';
-            playerScore++;
-          } else {
-            result = 'You lose!';
-            computerScore++;
-          }
-
-          document.getElementById('playerScore').textContent = 'Player Score: ' + playerScore;
-          document.getElementById('computerScore').textContent = 'Computer Score: ' + computerScore;
-          alert(`You picked ${move}. Computer picked ${computerMove}. ${result}`);
-      }
-    </script>
-
-    <button onclick="playGame('rock')">Rock</button>
-    <button onclick="playGame('paper')">Paper</button>
-    <button onclick="playGame('scissors')">Scissors</button>
   <script>
-    function pickComputerMove () {}
-   
+    let scores = JSON.parse(localStorage.getItem('scores')) || {
+      player: 0,
+      computer: 0,
+      tie: 0
+    };
+
+    function updateScoreDisplay() {
+      document.getElementById('playerScore').textContent = 'Player Score: ' + scores.player;
+      document.getElementById('computerScore').textContent = 'Computer Score: ' + scores.computer;
+      document.getElementById('tie').textContent = 'Tie: ' + scores.tie;
+    }
+
+    function playGame(move) {
+      const moves = ['rock', 'paper', 'scissors'];
+      const computerMove = moves[Math.floor(Math.random() * moves.length)];
+
+      let result = '';
+
+      if (move === computerMove) {
+        result = 'Tie.'
+        scores.tie++;
+      } else if (
+        (move === 'rock' && computerMove === 'scissors') ||
+        (move === 'paper' && computerMove === 'rock') ||
+        (move === 'scissors' && computerMove === 'paper')
+      ) {
+        result = 'You win!';
+        scores.player++;
+      } else {
+        result = 'You lose!';
+        scores.computer++;
+      }
+
+      localStorage.setItem('scores', JSON.stringify(scores));
+      alert(`You picked ${move}. Computer picked ${computerMove}. ${result}`);
+
+      updateScoreDisplay();
+    }
+
+    function resetScore() {
+      scores = {
+        player: 0,
+        computer: 0,
+        tie: 0
+      };
+
+      localStorage.setItem('scores', JSON.stringify(scores));
+      updateScoreDisplay();
+    }
+
+    // Update the score display when the page loads
+    updateScoreDisplay();
+  </script>
+
+  <button onclick="playGame('rock')">Rock</button>
+  <button onclick="playGame('paper')">Paper</button>
+  <button onclick="playGame('scissors')">Scissors</button>
+  <button onclick="resetScore()">Reset Score</button>
   </script>
 </body>
 
