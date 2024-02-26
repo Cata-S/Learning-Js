@@ -1,16 +1,47 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"/>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Rock Paper Scissors</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f4f4f4;
+      padding: 50px;
+      text-align: center;
+    }
+    p {
+      font-size: 20px;
+    }
+    button {
+      background-color: #1f7db3;
+      color: white;
+      padding: 15px 32px;
+      text-align: center;
+      text-decoration: none;
+      display: inline-block;
+      font-size: 16px;
+      margin: 4px 2px;
+      cursor: pointer;
+      border: none;
+      border-radius: 4px;
+    }
+    button:hover {
+      background-color: #45abca;
+    }
+  </style>
 </head>
 <body>
-  <p>Rock Paper Scissors</p>
+  <h1>Rock Paper Scissors</h1>
     
   <p id="playerScore">Player Score: 0</p>
   <p id="computerScore">Computer Score: 0</p>
   <p id="tie">Tie: 0</p>
+
+ 
 
   <script>
     let scores = JSON.parse(localStorage.getItem('scores')) || {
@@ -47,12 +78,25 @@
       }
 
       localStorage.setItem('scores', JSON.stringify(scores));
-      alert(`You picked ${move}. Computer picked ${computerMove}. ${result}`);
-
-      updateScoreDisplay();
-    }
-
-    function resetScore() {
+     // Popup Animation // 
+     let icon = 'success';
+        if (result === 'You win!') {
+          icon = 'success';
+        } else if (result === 'You lose!') {
+          icon = 'error';
+        } else {
+          icon = 'info';
+        }
+        Swal.fire({
+      title: 'Rock Paper Scissors',
+      text: 'Player chose ' + move + '. Computer chose ' + computerMove + '. ' + result,
+      icon: icon,
+      confirmButtonText: 'Play Again',
+      timer: 5000,
+                   })
+                   
+      updateScoreDisplay() }
+     function resetScore() {
       scores = {
         player: 0,
         computer: 0,
@@ -65,13 +109,14 @@
 
     // Update the score display when the page loads
     updateScoreDisplay();
+    
   </script>
+  
+<button onclick="playGame('rock')"><i class="fas fa-hand-rock"></i></button>
+<button onclick="playGame('paper')"><i class="fas fa-hand-paper"></i></button>
+<button onclick="playGame('scissors')"><i class="fas fa-hand-peace"></i></button>
+<button onclick="resetScore()"><i class="fas fa-redo"></i></button>
 
-  <button onclick="playGame('rock')">Rock</button>
-  <button onclick="playGame('paper')">Paper</button>
-  <button onclick="playGame('scissors')">Scissors</button>
-  <button onclick="resetScore()">Reset Score</button>
-  </script>
-</body>
-
+ </body>
+    
 </html>
