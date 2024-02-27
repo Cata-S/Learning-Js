@@ -84,12 +84,12 @@
   <script>
   //Youtube subscribe button//
 
-      // Check if there's a saved subscription status in localStorage
-      let subscribeStatus = localStorage.getItem('subscribeStatus');
-      // If there is, set the button text to that status
-      if (subscribeStatus) {
-        document.getElementById('subscribe').textContent = subscribeStatus;
-      }
+     // Check if there's a saved subscription status in localStorage
+    let subscribeStatus = localStorage.getItem('subscribeStatus');
+    // If there is, set the button text to that status
+     if (subscribeStatus) {
+      document.getElementById('subscribe').textContent = subscribeStatus;
+     }
       document.getElementById('subscribe').addEventListener('click', function() {
         if (this.textContent === 'Subscribe') {
           this.textContent = 'Subscribed';
