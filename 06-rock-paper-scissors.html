@@ -29,6 +29,15 @@
       border: none;
       border-radius: 4px;
     }
+    #autoplayButton {
+      background-color: #c51414;
+      color: #ffffff;
+    }
+
+    #autoplayButton.active {
+      background-color: #000000;
+      color: rgb(255, 255, 255);
+    }
     button:hover {
       background-color: #45abca;
     }
@@ -49,6 +58,28 @@
       computer: 0,
       tie: 0
     };
+   let autoplayInterval = null;
+
+   function autoplay() {
+    let autoplayButton = document.getElementById('autoplayButton');
+    if (autoplayInterval) {
+      // If autoplay is already running, stop it
+      clearInterval(autoplayInterval);
+      autoplayInterval = null;
+      autoplayButton.classList.remove('active');
+    } else {
+      // Otherwise, start autoplay
+      let makeMove = () => {
+      let moves = ['rock', 'paper', 'scissors'];
+      let randomMove = moves[Math.floor(Math.random() * moves.length)];
+      playGame(randomMove);
+    };
+      makeMove();
+
+      autoplayInterval = setInterval(makeMove, 2000);
+      autoplayButton.classList.add('active');
+    }
+  }
 
     function updateScoreDisplay() {
       document.getElementById('playerScore').textContent = 'Player Score: ' + scores.player;
@@ -93,7 +124,8 @@
       icon: icon,
       confirmButtonText: 'Play Again',
       timer: 5000,
-                   })
+       })
+
                    
       updateScoreDisplay() }
      function resetScore() {
@@ -116,6 +148,7 @@
 <button onclick="playGame('paper')"><i class="fas fa-hand-paper"></i></button>
 <button onclick="playGame('scissors')"><i class="fas fa-hand-peace"></i></button>
 <button onclick="resetScore()"><i class="fas fa-redo"></i></button>
+<button id="autoplayButton" onclick="autoplay()"><i class="fas fa-play"></i> Autoplay</button>
 
  </body>
     
