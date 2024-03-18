@@ -103,21 +103,22 @@
         // Save the current subscription status in localStorage
         localStorage.setItem('subscribeStatus', this.textContent);
       });
-
- 
-  //Amazon shipping calculator//
-    document.getElementById('calculate').addEventListener('click', function() {
+        //Amazon shipping calculator//
+      document.getElementById('calculate').addEventListener('click', function() {
       let order = parseFloat(document.getElementById('order').value);
       if (isNaN(order)) {
-        document.getElementById('result').textContent = 'Please enter a valid number';
+       document.getElementById('result').textContent = 'Please enter a valid number';
       } else {
         if (order < 40) {
           order += 10;
         }
-        document.getElementById('result').textContent = 'Total: $' + order.toFixed(2);
+       document.getElementById('result').textContent = 'Total: $' + order.toFixed(2);
       }
     });
   </script>
+
+<script src="https://unpkg.com/supersimpledev@1.0.1/hello.js"></script>
+
 </body>
 
 </html>
